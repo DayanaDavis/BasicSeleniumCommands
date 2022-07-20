@@ -86,4 +86,9 @@ public class SeleniumCommands {
         driver.findElement(By.id("submitbutton")).click();
     }
 
+    @Test
+    public void verifyLogin(){
+        System.out.println("Hi ..");
+    }
+
 }
