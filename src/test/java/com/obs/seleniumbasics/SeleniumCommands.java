@@ -90,5 +90,9 @@ public class SeleniumCommands {
     public void verifyLogin(){
         System.out.println("Hi ..");
     }
+    @Test
+    public void verifySearch(){
+        System.out.println("Hi ..");
+    }
 
 }
