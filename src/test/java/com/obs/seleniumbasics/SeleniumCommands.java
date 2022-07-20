@@ -2,7 +2,9 @@ package com.obs.seleniumbasics;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -12,9 +14,13 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class SeleniumCommands {
     public WebDriver driver;
@@ -47,7 +53,7 @@ public class SeleniumCommands {
     }
     @AfterMethod
     public void tearDown() {
-        driver.quit();
+       // driver.quit();
     }
 
     @Test
@@ -87,12 +93,22 @@ public class SeleniumCommands {
     }
 
     @Test
-    public void verifyLogin(){
-        System.out.println("Hi ..");
-    }
-    @Test
-    public void verifySearch(){
-        System.out.println("Hi ..");
-    }
+    public void verifyFileUploadingRobotClass() throws AWTException {
+        driver.get("https://demo.guru99.com/test/upload/");
+        StringSelection s = new StringSelection("C:\\Users\\davis\\Desktop\\assignment-selenium.docx");
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(s,null);
+        driver.findElement(By.id("uploadfile_0")).click();
+        Robot r = new Robot();
+        r.keyPress(KeyEvent.VK_ENTER);
+        r.keyRelease(KeyEvent.VK_ENTER);
+        r.keyPress(KeyEvent.VK_CONTROL);
+        r.keyPress(KeyEvent.VK_V);
+        r.keyRelease(KeyEvent.VK_CONTROL);
+        r.keyRelease(KeyEvent.VK_V);
+        r.keyPress(KeyEvent.VK_ENTER);
+        r.keyRelease(KeyEvent.VK_ENTER);
+        driver.findElement(By.id("terms")).click();
+        driver.findElement(By.id("submitbutton")).click();
 
+    }
 }
