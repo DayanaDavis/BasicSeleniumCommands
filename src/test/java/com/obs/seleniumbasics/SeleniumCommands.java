@@ -50,10 +50,12 @@ public class SeleniumCommands {
             driver.manage().window().maximize();
             driver.manage().deleteAllCookies();//to delete all cookies and get a fresh page
             //driver.get(url);
-            //driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+           // driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
     }
-    @BeforeMethod
-    public void setUp() {
+    @BeforeMethod(alwaysRun = true)
+    @Parameters({"browser","url"})
+    public void setUp(String browserName,String baseUrl) {
+       // testInitialize(browserName,baseUrl);
         testInitialize("chrome","http://demowebshop.tricentis.com/");
     }
     @AfterMethod
@@ -66,10 +68,10 @@ public class SeleniumCommands {
         driver.quit();
     }
 
-    @Test
+    @Test(priority = 1,enabled = true,description = "TC_001_Verify Homepage Titile",groups = {"smoke","regression"})
     public void verifyHomePageTitle() {
         driver.get("http://demowebshop.tricentis.com/");
-        String expTitle="DemoWeb Shop";
+        String expTitle="Demo Web Shop";
         String actTitle=driver.getTitle();
         Assert.assertEquals(actTitle, expTitle,"Error:Invalid home page title found");
     }
@@ -141,10 +143,10 @@ public class SeleniumCommands {
         js.executeScript(s2);
     }
 
-    @Test
+    @Test(priority = 2,enabled = true,description = "TC_002_verify Valid login Excel",groups = {"smoke"})
     public void verifyValidloginExcel() throws IOException {
         ExcelUtility excelUtility = new ExcelUtility();
-        driver.get("http://demowebshop.tricentis.com/");
+        //driver.get("http://demowebshop.tricentis.com/");
         driver.findElement(By.xpath("//a[text()='Log in']")).click();
         WebElement user = driver.findElement(By.xpath("//input[@id='Email']"));
         String user_value = excelUtility.readData(1, 0, "login");
