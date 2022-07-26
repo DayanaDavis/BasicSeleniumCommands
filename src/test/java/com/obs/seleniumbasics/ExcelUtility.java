@@ -36,12 +36,12 @@ public class ExcelUtility {
         FileInputStream file = new FileInputStream(filePath);
         XSSFWorkbook workbook = new XSSFWorkbook(file);
         XSSFSheet sheet = workbook.getSheet(sheetName);
-        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+        int rowCount = sheet.getLastRowNum();
         int cellCount=sheet.getRow(0).getLastCellNum();
         Object[][] data=new  Object[rowCount][cellCount];
         for (int i = 1; i <=rowCount; i++) {
             Row r = sheet.getRow(i);
-            for (int j = 0; j <=cellCount-1; j++) {
+            for (int j = 0; j <cellCount; j++) {
                 Cell c=r.getCell(j);
                 if(c.getCellType()==Cell.CELL_TYPE_STRING){
                     data[i-1][j]=c.getStringCellValue();
