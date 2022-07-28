@@ -21,10 +21,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Date;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class SeleniumCommands {
@@ -49,13 +47,14 @@ public class SeleniumCommands {
         }
             driver.manage().window().maximize();
             driver.manage().deleteAllCookies();//to delete all cookies and get a fresh page
-            //driver.get(url);
-           // driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+          //  driver.get(url);
+          // driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
     }
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser","url"})
-    public void setUp(String browserName,String baseUrl) {
-       // testInitialize(browserName,baseUrl);
+   // public void setUp(String browserName,String baseUrl)
+        public void setUp(){
+       //testInitialize(browserName,baseUrl);
         testInitialize("chrome","http://demowebshop.tricentis.com/");
     }
     @AfterMethod
@@ -181,6 +180,20 @@ public class SeleniumCommands {
         String filepath = System.getProperty("user.dir") + "\\src\\main\\resources\\testdata.xlsx";
         Object[][] excelData=excelUtility.readDataFromExcel(filepath,"login");
         return excelData;
+    }
+
+    @Test
+    public void verifytabledata() throws IOException {
+        driver.get("https://www.w3schools.com/html/html_tables.asp");
+        String filepath = System.getProperty("user.dir") + "\\src\\main\\resources\\testdata.xlsx";
+        List<WebElement> rowelements=driver.findElements(By.xpath("//table[@id='customers']/tbody/tr"));
+        List<WebElement>cellelements=driver.findElements(By.xpath("//table[@id='customers']/tbody/tr/td"));
+        List<ArrayList<String>> actualGridData=TableUtility.getGridData(rowelements,cellelements);
+        ExcelUtility excelUtility=new ExcelUtility();
+        List<ArrayList<String>> expectedGridData=excelUtility.getExcelAs2DList(filepath,"W3table");
+        System.out.println(actualGridData);
+        System.out.println(expectedGridData);
+        Assert.assertEquals(actualGridData,expectedGridData,"Not matching");
     }
 
 }
