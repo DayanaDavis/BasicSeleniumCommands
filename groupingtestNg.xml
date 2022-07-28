@@ -11,12 +11,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.obs.seleniumbasics.SeleniumCommands">
-                <methods>
-                    <include name="verifyHomePageTitle"/>
-                    <include name="verifyValidloginExcel"/>
-                </methods>
-            </class>
+            <class name="com.obs.seleniumbasics.SeleniumCommands"/>
         </classes>
     </test>
 </suite>
